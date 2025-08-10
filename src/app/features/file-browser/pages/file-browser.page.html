@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-content>
+    <p>Aby dodać plik przeciągnij go na wybrany folder.</p>
+    <app-file-browser-tree
+      [dataSource]="dataSource()"
+      (handleDownload)="onDownload($event)"
+      (handleDelete)="onDelete($event)"
+      (handleDrop)="onDrop($event.event, $event.parentFolderId)"
+    ></app-file-browser-tree>
+  </mat-card-content>
+</mat-card>

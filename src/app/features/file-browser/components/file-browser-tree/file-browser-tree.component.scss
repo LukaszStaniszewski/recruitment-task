@@ -1,0 +1,36 @@
+.example-tree-invisible {
+  display: none;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.children {
+  margin-left: 70px;
+  display: flex;
+  flex-direction: column;
+}
+.children.hidden {
+  display: none;
+}
+// .file-node {
+//   padding-left: 60px !important;
+// }
+
+.file-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.empty-folder {
+  padding: 2px 0;
+
+  button {
+    visibility: hidden;
+  }
+}

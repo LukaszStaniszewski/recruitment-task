@@ -1,0 +1,79 @@
+<mat-tree
+  #tree
+  [dataSource]="dataSource()"
+  [childrenAccessor]="childrenAccessor"
+>
+  <!-- Folders -->
+  <mat-nested-tree-node
+    *matTreeNodeDef="let node; when: isExpandableFolder"
+    matTreeNodeToggle
+    [cdkTreeNodeTypeaheadLabel]="node.name"
+  >
+    <ui-drag-drop
+      (filesDropped)="
+        handleDrop.emit({ event: $event, parentFolderId: node.id })
+      "
+    >
+      <div class="node">
+        <button
+          mat-icon-button
+          matTreeNodeToggle
+          [attr.aria-label]="'Toggle ' + node.name"
+        >
+          <mat-icon>
+            {{ tree.isExpanded(node) ? "expand_more" : "chevron_right" }}
+          </mat-icon>
+        </button>
+        <mat-icon class="type">folder</mat-icon>
+        {{ node.name }}
+      </div>
+      <div class="children" [class.hidden]="!tree.isExpanded(node)">
+        <ng-container matTreeNodeOutlet></ng-container>
+      </div>
+    </ui-drag-drop>
+  </mat-nested-tree-node>
+
+  <!-- Files -->
+  <mat-nested-tree-node
+    *matTreeNodeDef="let node; when: isFile"
+    matTreeNodeToggle
+    [cdkTreeNodeTypeaheadLabel]="node.name"
+    class="file-actions"
+  >
+    {{ node.file?.name }}
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="handleDownload.emit(node)"
+    >
+      Pobierz
+    </button>
+    <button
+      mat-stroked-button
+      color="warn"
+      (click)="handleDelete.emit(node.id)"
+    >
+      Usuń
+    </button>
+    <div class="children file-node" [class.hidden]="!tree.isExpanded(node)">
+      <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-nested-tree-node>
+
+  <!-- folders without children -->
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: isNonExpandableFolder">
+    <ui-drag-drop
+      (filesDropped)="
+        handleDrop.emit({ event: $event, parentFolderId: node.id })
+      "
+    >
+      <div class="node empty-folder">
+        <button mat-icon-button matTreeNodeToggle aria-hidden="true">
+          <mat-icon> "chevron_right" </mat-icon>
+        </button>
+        <mat-icon>folder</mat-icon>
+        {{ node.name }}
+      </div>
+    </ui-drag-drop>
+  </mat-nested-tree-node>
+</mat-tree>
