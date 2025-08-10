@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
-import { FileNode, FolderNode, NodeType as UiNodeType } from '../pages/file-browser.page';
+import { FileNode, FolderNode, NodeType as UiNodeType } from '../file-browser.page';
 import { inject } from '@angular/core';
 import {
   FileBrowserMockApiService,
@@ -44,8 +44,7 @@ function mapDtoToUi(dto: FolderNodeDto | FileNodeDto, currentUser: User | undefi
 export const fileBrowserResolver: ResolveFn<FolderNode[]> = (route: ActivatedRouteSnapshot) => {
   const fileBrowserMockApiService = inject(FileBrowserMockApiService);
 
-  const parentData = route.parent?.data as { user?: User } | undefined;
-  const currentUser = parentData?.user;
+  const currentUser: User = route.parent?.data['user'];
 
   return fileBrowserMockApiService
     .getfolderNodes()

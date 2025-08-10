@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output, ViewChild, AfterView
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTree, MatTreeModule } from '@angular/material/tree';
-import { FileNode, FolderNode, NodeType } from '../../pages/file-browser.page';
+import { FileNode, FolderNode, NodeType } from '../../file-browser.page';
 import { DragDropComponent } from '@ui/drag-drop';
 
 @Component({
