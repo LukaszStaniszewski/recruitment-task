@@ -20,16 +20,4 @@ export const enum NodeType {
   File = 2,
 }
 
-export interface FolderNodeDto {
-  id: number;
-  name: string;
-  type: NodeType;
-  children?: Array<FileNodeDto | FolderNodeDto>;
-}
-
-export interface FileNodeDto {
-  id: number;
-  type: NodeType;
-  file: File;
-  ownerId: UserId;
-}
+export type FileBrowserNode = FolderNode | FileNode;

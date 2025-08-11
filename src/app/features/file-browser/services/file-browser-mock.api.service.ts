@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserId } from '@core/models';
 import { Observable, of } from 'rxjs';
-import { FolderNodeDto, NodeType } from '../model';
+import { FolderNodeDto } from './file-browser-dto.model';
+import { NodeType } from '../model';
+// import { FolderNodeDto, NodeType } from '../model';
 
 // export interface FolderNodeDto {
 //   id: number;
