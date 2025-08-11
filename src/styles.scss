@@ -13,7 +13,6 @@ body {
 
 @include mat.core();
 
-// Simple light theme
 $primary: mat.m2-define-palette(mat.$m2-indigo-palette);
 $accent: mat.m2-define-palette(mat.$m2-pink-palette);
 $warn: mat.m2-define-palette(mat.$m2-red-palette);
@@ -30,7 +29,6 @@ $theme: mat.m2-define-light-theme(
 
 @include mat.all-component-themes($theme);
 
-// Expose CSS variables for runtime usage
 :root {
   --app-background-primary: var(--mat-toolbar-container-background-color);
   --app-text-primary: var(--mat-toolbar-container-text-color);

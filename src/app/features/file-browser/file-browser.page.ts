@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DownloadFileService } from '@core/services';
 import { ActivatedRoute } from '@angular/router';
 import { FileNode, FolderNode, NodeType } from './model';
+import { FileTreeService } from './services';
 
 @Component({
   selector: 'app-file-browser',
@@ -17,6 +18,7 @@ import { FileNode, FolderNode, NodeType } from './model';
 export class FileBrowserPage {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly fileService = inject(DownloadFileService);
+  private readonly fileTree = inject(FileTreeService);
 
   dataSource = signal<FolderNode[]>(this.activatedRoute.snapshot.data['fileNodes']);
 
@@ -25,7 +27,7 @@ export class FileBrowserPage {
   }
 
   onDelete(fileId: number): void {
-    this.dataSource.update((data) => this.removeFileById(data, fileId));
+    this.dataSource.update((data) => this.fileTree.removeFile(data, fileId));
   }
 
   onDrop(event: FileList, parentFolderId: number): void {
@@ -40,63 +42,6 @@ export class FileBrowserPage {
       canDownload: true,
     }));
 
-    this.dataSource.update((data) => this.appendFilesToFolderById(data, parentFolderId, fileNodes));
-  }
-
-  private appendFilesToFolderById(
-    nodes: FolderNode[],
-    parentFolderId: number,
-    filesToAppend: FileNode[]
-  ): FolderNode[] {
-    const updateFolderNode = (folderNode: FolderNode): FolderNode => {
-      if (folderNode.id === parentFolderId) {
-        return {
-          ...folderNode,
-          children: [...(folderNode.children ?? []), ...filesToAppend],
-        };
-      }
-
-      if (!folderNode.children || folderNode.children.length === 0) {
-        return folderNode;
-      }
-
-      const updatedChildren = folderNode.children.map((child) => {
-        if (child.type === NodeType.Folder) {
-          return updateFolderNode(child as FolderNode);
-        }
-        return child;
-      });
-
-      return {
-        ...folderNode,
-        children: updatedChildren,
-      };
-    };
-
-    return nodes.map(updateFolderNode);
-  }
-
-  private removeFileById(nodes: FolderNode[], fileId: number): FolderNode[] {
-    const updateFolderNode = (folderNode: FolderNode): FolderNode => {
-      if (!folderNode.children || folderNode.children.length === 0) {
-        return folderNode;
-      }
-
-      const updatedChildren = folderNode.children
-        .map((child) => {
-          if (child.type === NodeType.Folder) {
-            return updateFolderNode(child as FolderNode);
-          }
-          return child;
-        })
-        .filter((child) => !(child.type === NodeType.File && (child as FileNode).id === fileId));
-
-      return {
-        ...folderNode,
-        children: updatedChildren,
-      };
-    };
-
-    return nodes.map(updateFolderNode);
+    this.dataSource.update((data) => this.fileTree.appendFiles(data, parentFolderId, fileNodes));
   }
 }
