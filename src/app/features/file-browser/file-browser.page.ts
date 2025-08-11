@@ -6,101 +6,102 @@ import { FileBrowserTreeComponent } from './components';
 import { MatCardModule } from '@angular/material/card';
 import { DownloadFileService } from '@core/services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileNode, FolderNode, NodeType } from './model';
 
-export interface FolderNode {
-  id: number;
-  name: string;
-  type: NodeType;
-  children?: Array<FileNode | FolderNode>;
-}
+// export interface FolderNode {
+//   id: number;
+//   name: string;
+//   type: NodeType;
+//   children?: Array<FileNode | FolderNode>;
+// }
 
-export interface FileNode {
-  id: number;
-  type: NodeType;
-  file: File;
-}
+// export interface FileNode {
+//   id: number;
+//   type: NodeType;
+//   file: File;
+// }
 
-export const enum NodeType {
-  Folder = 1,
-  File = 2,
-}
+// export const enum NodeType {
+//   Folder = 1,
+//   File = 2,
+// }
 
 // export type NodeType = 'folder' | 'file'
 
-const EXAMPLE_DATA: FolderNode[] = [
-  {
-    id: 1,
-    name: 'PROJEKTY',
-    type: NodeType.Folder,
-    children: [
-      {
-        id: 2,
-        name: 'Klient ABC',
-        type: NodeType.Folder,
-      },
-      {
-        id: 3,
-        name: 'Klient XYZ',
-        type: NodeType.Folder,
-        children: [
-          {
-            id: 4,
-            name: 'COMMON',
-            type: NodeType.Folder,
-            children: [
-              {
-                id: 11,
-                type: NodeType.File,
-                file: new File(['Hello from User1'], 'notes.txt', {
-                  type: 'text/plain;charset=utf-8',
-                }),
-              },
-            ],
-          },
-          {
-            id: 5,
-            name: '2022 Wizytówka',
-            type: NodeType.Folder,
-          },
-          {
-            id: 6,
-            name: '2025 Plakat',
-            type: NodeType.Folder,
-            children: [
-              {
-                id: 7,
-                name: 'Links',
-                type: NodeType.Folder,
-              },
-              {
-                id: 8,
-                name: 'Materials',
-                type: NodeType.Folder,
-              },
-              {
-                id: 9,
-                name: 'Old',
-                type: NodeType.Folder,
-              },
-              {
-                id: 10,
-                name: 'Out',
-                type: NodeType.Folder,
-              },
-            ],
-          },
-          {
-            id: 12,
-            type: NodeType.File,
-            file: new File(['Spec'], 'design.doc', {
-              type: 'application/msword',
-            }),
-          },
-        ],
-      },
-    ],
-  },
-];
+// const EXAMPLE_DATA: FolderNode[] = [
+//   {
+//     id: 1,
+//     name: 'PROJEKTY',
+//     type: NodeType.Folder,
+//     children: [
+//       {
+//         id: 2,
+//         name: 'Klient ABC',
+//         type: NodeType.Folder,
+//       },
+//       {
+//         id: 3,
+//         name: 'Klient XYZ',
+//         type: NodeType.Folder,
+//         children: [
+//           {
+//             id: 4,
+//             name: 'COMMON',
+//             type: NodeType.Folder,
+//             children: [
+//               {
+//                 id: 11,
+//                 type: NodeType.File,
+//                 file: new File(['Hello from User1'], 'notes.txt', {
+//                   type: 'text/plain;charset=utf-8',
+//                 }),
+//               },
+//             ],
+//           },
+//           {
+//             id: 5,
+//             name: '2022 Wizytówka',
+//             type: NodeType.Folder,
+//           },
+//           {
+//             id: 6,
+//             name: '2025 Plakat',
+//             type: NodeType.Folder,
+//             children: [
+//               {
+//                 id: 7,
+//                 name: 'Links',
+//                 type: NodeType.Folder,
+//               },
+//               {
+//                 id: 8,
+//                 name: 'Materials',
+//                 type: NodeType.Folder,
+//               },
+//               {
+//                 id: 9,
+//                 name: 'Old',
+//                 type: NodeType.Folder,
+//               },
+//               {
+//                 id: 10,
+//                 name: 'Out',
+//                 type: NodeType.Folder,
+//               },
+//             ],
+//           },
+//           {
+//             id: 12,
+//             type: NodeType.File,
+//             file: new File(['Spec'], 'design.doc', {
+//               type: 'application/msword',
+//             }),
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ];
 
 @Component({
   selector: 'app-file-browser',
@@ -130,6 +131,8 @@ export class FileBrowserPage {
       id: Math.random() * 1000000,
       type: NodeType.File,
       file,
+      canDelete: true,
+      canDownload: true,
     }));
 
     this.dataSource.update((data) => this.appendFilesToFolderById(data, parentFolderId, fileNodes));

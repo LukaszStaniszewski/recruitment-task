@@ -7,7 +7,6 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.page.html',
-  // styleUrls: ['./layout.page.scss'],
   imports: [NavbarComponent, RouterOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

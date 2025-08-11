@@ -1,25 +1,26 @@
 import { Injectable } from '@angular/core';
 import { UserId } from '@core/models';
 import { Observable, of } from 'rxjs';
+import { FolderNodeDto, NodeType } from '../model';
 
-export interface FolderNodeDto {
-  id: number;
-  name: string;
-  type: NodeType;
-  children?: Array<FileNodeDto | FolderNodeDto>;
-}
+// export interface FolderNodeDto {
+//   id: number;
+//   name: string;
+//   type: NodeType;
+//   children?: Array<FileNodeDto | FolderNodeDto>;
+// }
 
-export interface FileNodeDto {
-  id: number;
-  type: NodeType;
-  file: File;
-  ownerId: UserId;
-}
+// export interface FileNodeDto {
+//   id: number;
+//   type: NodeType;
+//   file: File;
+//   ownerId: UserId;
+// }
 
-export const enum NodeType {
-  Folder = 1,
-  File = 2,
-}
+// export const enum NodeType {
+//   Folder = 1,
+//   File = 2,
+// }
 
 @Injectable({
   providedIn: 'root',
@@ -107,7 +108,7 @@ export class FileBrowserMockApiService {
             {
               id: 12,
               type: NodeType.File,
-              file: new File(['Spec'], 'design.doc', {
+              file: new File(['Spec'], 'design-by-admin.doc', {
                 type: 'application/msword',
               }),
               ownerId: UserId.Admin,

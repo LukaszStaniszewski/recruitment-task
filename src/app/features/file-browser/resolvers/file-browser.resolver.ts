@@ -1,28 +1,27 @@
 import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
-import { FileNode, FolderNode, NodeType as UiNodeType } from '../file-browser.page';
+
 import { inject } from '@angular/core';
-import {
-  FileBrowserMockApiService,
-  FileNodeDto,
-  FolderNodeDto,
-  NodeType as DtoNodeType,
-} from '../services/file-browser-mock.api.service';
+
 import { User, UserId } from '@core/models';
 import { map } from 'rxjs';
+import { FileNode, FileNodeDto, FolderNode, FolderNodeDto, NodeType } from '../model';
+import { FileBrowserMockApiService } from '../services';
 
 function mapDtoToUi(dto: FolderNodeDto | FileNodeDto, currentUser: User | undefined): FolderNode | FileNode | null {
-  // Admin sees all; non-admins see only their own files
+  // Admin sees all; non-admins see their own files and admin's files
   const isAdmin = currentUser?.id === UserId.Admin;
 
-  if (dto.type === DtoNodeType.File) {
+  if (dto.type === NodeType.File) {
     const fileDto = dto as FileNodeDto;
-    if (!isAdmin && currentUser && fileDto.ownerId !== currentUser.id) {
+    if (!isAdmin && currentUser && !(fileDto.ownerId === currentUser.id || fileDto.ownerId === UserId.Admin)) {
       return null;
     }
     const fileNode: FileNode = {
       id: fileDto.id,
-      type: UiNodeType.File,
+      type: NodeType.File,
       file: fileDto.file,
+      canDelete: isAdmin || fileDto.ownerId === currentUser?.id,
+      canDownload: isAdmin || fileDto.ownerId === currentUser?.id,
     };
     return fileNode;
   }
@@ -35,7 +34,7 @@ function mapDtoToUi(dto: FolderNodeDto | FileNodeDto, currentUser: User | undefi
   const folderNode: FolderNode = {
     id: folderDto.id,
     name: folderDto.name,
-    type: UiNodeType.Folder,
+    type: NodeType.Folder,
     children: children.length > 0 ? children : undefined,
   };
   return folderNode;

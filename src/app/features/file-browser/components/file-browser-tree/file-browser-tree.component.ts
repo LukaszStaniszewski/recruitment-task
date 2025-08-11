@@ -2,15 +2,16 @@ import { ChangeDetectionStrategy, Component, input, output, ViewChild, AfterView
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTree, MatTreeModule } from '@angular/material/tree';
-import { FileNode, FolderNode, NodeType } from '../../file-browser.page';
 import { DragDropComponent } from '@ui/drag-drop';
+import { FileIconPipe } from '../../pipes/file-icon.pipe';
+import { FileNode, FolderNode, NodeType } from '@features/file-browser/model';
 
 @Component({
   selector: 'app-file-browser-tree',
   templateUrl: 'file-browser-tree.component.html',
   styleUrl: 'file-browser-tree.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatTreeModule, MatButtonModule, MatIconModule, DragDropComponent],
+  imports: [MatTreeModule, MatButtonModule, MatIconModule, DragDropComponent, FileIconPipe],
 })
 export class FileBrowserTreeComponent implements AfterViewInit {
   @ViewChild('tree') private tree?: MatTree<FolderNode | FileNode>;
@@ -28,6 +29,10 @@ export class FileBrowserTreeComponent implements AfterViewInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.tree?.expandAll();
+  }
+
   childrenAccessor = (node: FolderNode): FolderNode[] => (node.children ?? []) as FolderNode[];
 
   isExpandableFolder = (_: number, node: FolderNode): boolean =>
@@ -37,8 +42,4 @@ export class FileBrowserTreeComponent implements AfterViewInit {
 
   isNonExpandableFolder = (_: number, node: FolderNode): boolean =>
     !node.children || (node.children.length === 0 && node.type === NodeType.Folder);
-
-  ngAfterViewInit(): void {
-    this.tree?.expandAll();
-  }
 }

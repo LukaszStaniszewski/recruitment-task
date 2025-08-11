@@ -40,7 +40,9 @@
     [cdkTreeNodeTypeaheadLabel]="node.name"
     class="file-actions"
   >
+    <mat-icon class="type">{{ node.file?.name | fileIcon }}</mat-icon>
     {{ node.file?.name }}
+    @if (node.canDownload) {
     <button
       mat-stroked-button
       color="primary"
@@ -48,6 +50,7 @@
     >
       Pobierz
     </button>
+    } @if (node.canDelete) {
     <button
       mat-stroked-button
       color="warn"
@@ -55,6 +58,7 @@
     >
       Usuń
     </button>
+    }
     <div class="children file-node" [class.hidden]="!tree.isExpanded(node)">
       <ng-container matTreeNodeOutlet></ng-container>
     </div>
