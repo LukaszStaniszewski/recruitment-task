@@ -1,5 +1,3 @@
-import { UserId } from '@core/models';
-
 export interface FolderNode {
   readonly id: number;
   readonly name: string;

@@ -2,13 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
-  padding: 0 16px;
+  height: 3.5rem;
+  padding: 0 1rem;
   color: var(--app-text-primary);
   background-color: var(--app-background-primary);
 
   &__title {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
   }
 }

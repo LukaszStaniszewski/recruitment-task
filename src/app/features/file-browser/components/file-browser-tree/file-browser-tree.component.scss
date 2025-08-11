@@ -2,14 +2,15 @@
   &__node {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 2px 0;
+    gap: 0.5rem;
+    padding: 0.125rem 0;
   }
 
   &__children {
-    margin-left: 70px;
+    margin-left: 4.375rem;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 
     &--hidden {
       display: none;
@@ -18,12 +19,13 @@
 
   &__file {
     display: flex;
-    gap: 8px;
+    gap: 0.5rem;
     align-items: center;
+    min-height: 2.25rem;
   }
 
   &__empty-folder {
-    padding: 2px 0;
+    padding: 0.125rem 0;
 
     button {
       visibility: hidden;
