@@ -1,36 +1,32 @@
-.example-tree-invisible {
-  display: none;
-}
+.file-tree {
+  &__node {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 0;
+  }
 
-.node {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 2px 0;
-}
+  &__children {
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
 
-.children {
-  margin-left: 70px;
-  display: flex;
-  flex-direction: column;
-}
-.children.hidden {
-  display: none;
-}
-// .file-node {
-//   padding-left: 60px !important;
-// }
+    &--hidden {
+      display: none;
+    }
+  }
 
-.file-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
+  &__file {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
 
-.empty-folder {
-  padding: 2px 0;
+  &__empty-folder {
+    padding: 2px 0;
 
-  button {
-    visibility: hidden;
+    button {
+      visibility: hidden;
+    }
   }
 }

@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FileBrowserTreeComponent } from './components';
 import { MatCardModule } from '@angular/material/card';
 import { DownloadFileService } from '@core/services';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FileNode, FolderNode, NodeType } from './model';
 
 @Component({

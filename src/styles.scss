@@ -32,9 +32,12 @@ $theme: mat.m2-define-light-theme(
 
 // Expose CSS variables for runtime usage
 :root {
-  --app-background-primary: var(
-    --mat-toolbar-container-background-color,
-    #3f51b5
+  --app-background-primary: var(--mat-toolbar-container-background-color);
+  --app-text-primary: var(--mat-toolbar-container-text-color);
+
+  @include mat.card-overrides(
+    (
+      elevated-container-elevation: none,
+    )
   );
-  --app-text-primary: var(--mat-toolbar-container-text-color, #fff);
 }

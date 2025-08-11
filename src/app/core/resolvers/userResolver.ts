@@ -3,7 +3,7 @@ import { ResolveFn } from '@angular/router';
 import { User } from '@core/models';
 import { UserService } from '@core/services';
 
-export const userResolver: ResolveFn<User | undefined> = () => {
+export const userResolver: ResolveFn<User> = () => {
   const userService = inject(UserService);
-  return userService.getRandomUser();
+  return userService.getUser();
 };

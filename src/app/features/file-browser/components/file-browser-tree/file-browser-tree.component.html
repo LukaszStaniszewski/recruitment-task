@@ -1,5 +1,6 @@
 <mat-tree
   #tree
+  class="file-tree"
   [dataSource]="dataSource()"
   [childrenAccessor]="childrenAccessor"
 >
@@ -14,7 +15,7 @@
         handleDrop.emit({ event: $event, parentFolderId: node.id })
       "
     >
-      <div class="node">
+      <div class="file-tree__node">
         <button
           mat-icon-button
           matTreeNodeToggle
@@ -24,10 +25,13 @@
             {{ tree.isExpanded(node) ? "expand_more" : "chevron_right" }}
           </mat-icon>
         </button>
-        <mat-icon class="type">folder</mat-icon>
+        <mat-icon>folder</mat-icon>
         {{ node.name }}
       </div>
-      <div class="children" [class.hidden]="!tree.isExpanded(node)">
+      <div
+        class="file-tree__children"
+        [class.file-tree__children--hidden]="!tree.isExpanded(node)"
+      >
         <ng-container matTreeNodeOutlet></ng-container>
       </div>
     </ui-drag-drop>
@@ -36,11 +40,10 @@
   <!-- Files -->
   <mat-nested-tree-node
     *matTreeNodeDef="let node; when: isFile"
-    matTreeNodeToggle
     [cdkTreeNodeTypeaheadLabel]="node.name"
-    class="file-actions"
+    class="file-tree__file"
   >
-    <mat-icon class="type">{{ node.file?.name | fileIcon }}</mat-icon>
+    <mat-icon>{{ node.file?.name | fileIcon }}</mat-icon>
     {{ node.file?.name }}
     @if (node.canDownload) {
     <button
@@ -59,7 +62,10 @@
       Usuń
     </button>
     }
-    <div class="children file-node" [class.hidden]="!tree.isExpanded(node)">
+    <div
+      class="file-tree__children file-tree__children--file"
+      [class.file-tree__children--hidden]="!tree.isExpanded(node)"
+    >
       <ng-container matTreeNodeOutlet></ng-container>
     </div>
   </mat-nested-tree-node>
@@ -71,8 +77,8 @@
         handleDrop.emit({ event: $event, parentFolderId: node.id })
       "
     >
-      <div class="node empty-folder">
-        <button mat-icon-button matTreeNodeToggle aria-hidden="true">
+      <div class="file-tree__node file-tree__empty-folder">
+        <button mat-icon-button aria-hidden="true">
           <mat-icon> "chevron_right" </mat-icon>
         </button>
         <mat-icon>folder</mat-icon>

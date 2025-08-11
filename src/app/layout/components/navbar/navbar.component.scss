@@ -6,9 +6,9 @@
   padding: 0 16px;
   color: var(--app-text-primary);
   background-color: var(--app-background-primary);
-}
 
-.title {
-  font-size: 16px;
-  font-weight: 500;
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+  }
 }
