@@ -7,7 +7,7 @@ export interface FolderNodeDto {
   readonly id: number;
   readonly name: string;
   readonly type: NodeType;
-  readonly children?: Array<FileNodeDto | FolderNodeDto>;
+  readonly children?: FileBrowserNodeDto[];
 }
 
 export interface FileNodeDto {

@@ -8,5 +8,5 @@ import { User } from '@core/models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
-  currentuser = input.required<User>();
+  currentUser = input.required<User>();
 }

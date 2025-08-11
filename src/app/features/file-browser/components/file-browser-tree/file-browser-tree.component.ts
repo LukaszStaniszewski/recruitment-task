@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTree, MatTreeModule } from '@angular/material/tree';
 import { DragDropComponent } from '@ui/drag-drop';
 import { FileIconPipe } from '../../pipes/file-icon.pipe';
-import { FileNode, FolderNode, NodeType } from '@features/file-browser/model';
+import { FileNode, FolderNode, NodeType, FileBrowserNode } from '@features/file-browser/model';
 
 @Component({
   selector: 'app-file-browser-tree',
@@ -14,7 +14,7 @@ import { FileNode, FolderNode, NodeType } from '@features/file-browser/model';
   imports: [MatTreeModule, MatButtonModule, MatIconModule, DragDropComponent, FileIconPipe],
 })
 export class FileBrowserTreeComponent implements AfterViewInit {
-  @ViewChild('tree') private tree?: MatTree<FolderNode | FileNode>;
+  @ViewChild('tree') private tree?: MatTree<FileBrowserNode>;
   readonly dataSource = input.required<FolderNode[]>();
 
   readonly handleDownload = output<FileNode>();
@@ -33,13 +33,14 @@ export class FileBrowserTreeComponent implements AfterViewInit {
     this.tree?.expandAll();
   }
 
-  childrenAccessor = (node: FolderNode): FolderNode[] => (node.children ?? []) as FolderNode[];
+  childrenAccessor = (node: FileBrowserNode): FileBrowserNode[] =>
+    node.type === NodeType.Folder ? node.children ?? [] : [];
 
-  isExpandableFolder = (_: number, node: FolderNode): boolean =>
-    !!node.children && node.children.length > 0 && node.type === NodeType.Folder;
+  isExpandableFolder = (_: number, node: FileBrowserNode): node is FolderNode =>
+    node.type === NodeType.Folder && !!node.children && node.children.length > 0;
 
-  isFile = (_: number, node: FolderNode): boolean => node.type === NodeType.File;
+  isFile = (_: number, node: FileBrowserNode): node is FileNode => node.type === NodeType.File;
 
-  isNonExpandableFolder = (_: number, node: FolderNode): boolean =>
-    !node.children || (node.children.length === 0 && node.type === NodeType.Folder);
+  isNonExpandableFolder = (_: number, node: FileBrowserNode): node is FolderNode =>
+    node.type === NodeType.Folder && (!node.children || node.children.length === 0);
 }

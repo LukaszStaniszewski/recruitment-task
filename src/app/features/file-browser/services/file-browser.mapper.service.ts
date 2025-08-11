@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Mapper } from '@core/mappers';
 import { User, UserId } from '@core/models';
 import { FileBrowserNodeDto, FileNodeDto, FolderNodeDto } from './file-browser-dto.model';
-import { FileNode, FolderNode, NodeType } from '../model';
+import { FileNode, FolderNode, NodeType, FileBrowserNode } from '../model';
 
 export type MapInput = {
   dto: FileBrowserNodeDto[];
@@ -19,7 +19,7 @@ export class FileBrowserMapperService extends Mapper<MapInput, FolderNode[]> {
       .filter((node): node is FolderNode => node !== null && node.type === NodeType.Folder);
   }
 
-  private mapNode(dto: FileBrowserNodeDto, currentUser: User): FolderNode | FileNode | null {
+  private mapNode(dto: FileBrowserNodeDto, currentUser: User): FileBrowserNode | null {
     const isAdmin = currentUser?.id === UserId.Admin;
 
     if (dto.type === NodeType.File) {
@@ -40,7 +40,7 @@ export class FileBrowserMapperService extends Mapper<MapInput, FolderNode[]> {
     const folderDto = dto as FolderNodeDto;
     const children = (folderDto.children ?? [])
       .map((child) => this.mapNode(child, currentUser))
-      .filter((child): child is FileNode | FolderNode => child !== null);
+      .filter((child): child is FileBrowserNode => child !== null);
 
     const folderNode: FolderNode = {
       id: folderDto.id,

@@ -101,7 +101,7 @@ export class FileBrowserMockApiService {
     },
   ];
 
-  getfolderNodes(): Observable<FolderNodeDto[]> {
+  getFolderNodes(): Observable<FolderNodeDto[]> {
     return of(this.DATA);
   }
 }
