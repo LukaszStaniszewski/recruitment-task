@@ -5,5 +5,5 @@ import { UserService } from '@core/services';
 
 export const userResolver: ResolveFn<User> = () => {
   const userService = inject(UserService);
-  return userService.getUser();
+  return userService.user$;
 };

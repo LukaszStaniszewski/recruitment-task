@@ -15,5 +15,5 @@ export const fileBrowserResolver: ResolveFn<FolderNode[]> = (route: ActivatedRou
 
   return fileBrowserMockApiService
     .getFolderNodes()
-    .pipe(map((nodesDto) => fileBrowserMapperService.mapFrom({ dto: nodesDto, currentUser })));
+    .pipe(map((nodesDto) => fileBrowserMapperService.mapFrom({ dto: nodesDto, userId: currentUser.id })));
 };

@@ -14,7 +14,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: FileBrowserPage,
+        loadComponent: () => import('@features/file-browser').then((m) => m.FileBrowserPage),
         resolve: {
           fileNodes: fileBrowserResolver,
         },
