@@ -8,7 +8,7 @@ import { NodeType } from '../model';
   providedIn: 'root',
 })
 export class FileBrowserMockApiService {
-  private DATA: FolderNodeDto[] = [
+  DATA: FolderNodeDto[] = [
     {
       id: 1,
       name: 'PROJEKTY',

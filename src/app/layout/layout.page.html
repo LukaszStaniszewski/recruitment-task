@@ -1,4 +1,6 @@
-<app-navbar [currentUser]="user()" />
+@let user = user$ | async; @if (user) {
+<app-navbar [currentUser]="user" />
+}
 <main>
   <router-outlet />
 </main>

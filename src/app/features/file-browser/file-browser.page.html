@@ -1,4 +1,17 @@
 <mat-card>
+  <div class="user-select-wrapper">
+    <mat-label>Wybierz użytkownika:</mat-label>
+    <mat-select
+      placeholder="Wybierz widok"
+      (selectionChange)="onSelectUser($event)"
+      [value]="user$ | async"
+      [compareWith]="compareUsers"
+    >
+      @for(user of users$ |async; track user.id) {
+      <mat-option [value]="user">{{ user.name }}</mat-option>
+      }
+    </mat-select>
+  </div>
   <mat-card-content>
     <p>Aby dodać plik przeciągnij go na wybrany folder.</p>
     <app-file-browser-tree
