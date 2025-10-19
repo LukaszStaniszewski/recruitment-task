@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User, UserId } from '@core/models';
 import { BehaviorSubject, of } from 'rxjs';
 
-export const Users = [
+const Users = [
   { id: UserId.Admin, name: 'Admin' },
   { id: UserId.User1, name: 'User1' },
   { id: UserId.User2, name: 'User2' },
